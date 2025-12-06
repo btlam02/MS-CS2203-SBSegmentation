@@ -3,3 +3,5 @@ datasets
 runs
 application/models
 application/requirements.txt
+myenv
+scripts/yolo11n-seg.pt
