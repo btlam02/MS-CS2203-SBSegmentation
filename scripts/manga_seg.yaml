@@ -1,0 +1,6 @@
+
+path: /home/i86/WorkingSpace/Lbeos/Manga/BalloonSegmentation/CS2203/datasets
+train: images/train
+val: images/val
+names:
+  0: balloon
