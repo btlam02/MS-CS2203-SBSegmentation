@@ -11,7 +11,7 @@ from shapely.geometry import Polygon
 # --- CẤU HÌNH HỆ THỐNG ---
 DATASET_DIR = '../datasets'
 SPLIT = 'val'
-IMG_DIR = os.path.join(DATASET_DIR, 'images', SPLIT)
+IMG_DIR = os.path.join(DATASET_DIR, 'images/test', SPLIT)
 LABEL_DIR = os.path.join(DATASET_DIR, 'labels_seg', SPLIT) # Dùng nhãn Segmentation gốc
 
 # Định nghĩa các Pipeline cần test

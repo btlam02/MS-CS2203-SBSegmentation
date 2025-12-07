@@ -1,6 +1,7 @@
 
-path: /home/i86/WorkingSpace/Lbeos/MS/CS2203/datasets
-train: images/train
-val: images/val
-names:
-  0: balloon
+    path: /home/i86/WorkingSpace/Lbeos/MS/CS2203/datasets
+    train: images/train
+    val: images/val
+    names:
+      0: balloon
+    

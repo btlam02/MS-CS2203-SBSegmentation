@@ -10,7 +10,7 @@ PADDING = 10
 # Load Models
 model_yolo_seg = YOLO('../runs/pipeline1_yolo/train_seg_augmented_11_n/weights/best.pt')
 model_yolo_det = YOLO('../runs/pipeline2_det/train_det/weights/best.pt')
-model_sam = SAM('sam_b.pt')
+model_sam = SAM('sam3.pt')
 
 def get_center_point(box):
     """Tính tâm của box để làm Point Prompt"""

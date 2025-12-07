@@ -4,7 +4,7 @@ import shutil
 
 # --- CẤU HÌNH ---
 DATASET_DIR = '../datasets'
-PSEUDO_LABEL_DIR = os.path.join(DATASET_DIR, 'labels_seg_pseudo')
+PSEUDO_LABEL_DIR = os.path.join(DATASET_DIR, 'labels_seg')
 TARGET_LABEL_DIR = os.path.join(DATASET_DIR, 'labels')
 
 def setup_labels_for_yolo():
@@ -23,7 +23,7 @@ def setup_labels_for_yolo():
         # Backup an toàn ra folder riêng
         backup_dir = os.path.join(DATASET_DIR, 'labels_backup_before_seg')
         if not os.path.exists(backup_dir):
-            print(f"🔄 Đang backup folder 'labels' hiện tại sang '{backup_dir}'...")
+            print(f"Đang backup folder 'labels' hiện tại sang '{backup_dir}'...")
             os.rename(TARGET_LABEL_DIR, backup_dir)
         else:
             # Nếu đã có backup rồi thì xóa folder labels hiện tại đi để chép mới
@@ -51,7 +51,7 @@ if setup_labels_for_yolo():
     
     # Load model pre-trained
     model = YOLO('yolov8n-seg.pt') 
-
+    
     results = model.train(
         data='manga_seg.yaml',
         epochs=50,
@@ -59,10 +59,10 @@ if setup_labels_for_yolo():
         project='../runs/pipeline1_yolo',
         name='train_seg_pseudo',
         device=0,
-        # --- Advanced Settings (Slide 5) ---
+      
         box=7.5,        # Tăng trọng số loss cho Box
-        mask=2.5,       # Tăng trọng số loss cho Mask
+        cls=2.5,       # Tăng trọng số loss cho Mask
         close_mosaic=10 # Tắt Mosaic augmentation ở 10 epoch cuối để ổn định mask
     )
 else:
-    print("Dừng chương trình 7do thiếu dữ liệu nhãn.")
+    print("Dừng chương trình do thiếu dữ liệu nhãn.")

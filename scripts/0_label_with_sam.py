@@ -60,7 +60,7 @@ def process_split(model, split_name):
     os.makedirs(output_dir, exist_ok=True)
     
     label_files = glob.glob(os.path.join(label_det_dir, '*.txt'))
-    print(f"   Tìm thấy {len(label_files)} files.")
+    print(f"Tìm thấy {len(label_files)} files.")
     
     if len(label_files) == 0: return
 
@@ -107,9 +107,7 @@ def process_split(model, split_name):
         if not boxes: continue
         
         # 2. Run SAM Inference
-        # Sử dụng bboxes để prompt SAM
-        results = model(img_path, bboxes=boxes, verbose=False)
-        
+        results = model(img_path, bboxes=boxes, verbose=False) 
         new_lines = []
         
         # 3. Process Results
@@ -123,7 +121,6 @@ def process_split(model, split_name):
                 
                 if mask.shape[:2] != (h, w):
                      mask = cv2.resize(mask, (w, h), interpolation=cv2.INTER_NEAREST)
-
                 poly_str = create_yolo_polygon_label(mask, class_ids[i], h, w)
                 if poly_str:
                     new_lines.append(poly_str)

@@ -12,13 +12,8 @@ names:
 with open("manga_seg.yaml", "w") as f:
     f.write(yaml_content)
 
-# Lưu ý: YOLOv8 tự động tìm folder 'labels' cùng cấp 'images'. 
-# Vì ta đặt tên là 'labels_seg', ta cần đổi tên tạm thời hoặc copy.
-# Cách tốt nhất trong code: chỉ định rõ trong data.yaml hoặc đổi tên folder trước khi train
-# Ở đây ta giả định bạn đổi tên folder datasets/labels_seg thành datasets/labels thủ công hoặc bằng lệnh
-# Nếu không muốn đổi tên, hãy copy labels_seg -> labels
 
-model = YOLO('yolo11n-seg.pt') # n: nano, s: small, m: medium
+model = YOLO('yolov8n-seg.pt') # n: nano, s: small, m: medium
 
 
 # ... existing code ...
@@ -29,6 +24,8 @@ results = model.train(
     project='../runs/pipeline1_yolo',
     name='train_seg_augmented_11_n',
     device=0,
+    box=7.5,
+    cls=0.5,
     
     # --- TÙY CHỈNH AUGMENTATION ---
     mosaic=1.0,      # (0.0 - 1.0) Bật Mosaic 100% (Rất tốt cho bóng thoại nhỏ)

@@ -13,7 +13,7 @@ RAW_IMG_ROOT = '../raw_data/images'
 OUTPUT_DIR = '../datasets'
 
 def setup_dirs():
-    for split in ['train', 'val']:
+    for split in ['train', 'val','test']:
         os.makedirs(f'{OUTPUT_DIR}/images/{split}', exist_ok=True)
         os.makedirs(f'{OUTPUT_DIR}/labels_seg/{split}', exist_ok=True) # Pipeline 1
         os.makedirs(f'{OUTPUT_DIR}/labels_det/{split}', exist_ok=True) # Pipeline 2
@@ -52,15 +52,28 @@ def main():
     df = pd.read_csv(CSV_PATH)
     
     unique_files = df['file_name'].unique()
-    train_files, val_files = train_test_split(unique_files, test_size=0.15, random_state=42)
+    train_files, temp_file = train_test_split(unique_files, test_size=0.20, random_state=42)
+
+    test_file, val_file = train_test_split(temp_file, test_size=0.50, random_state=42)
+
+
     
     print("Bắt đầu xử lý dữ liệu...")
     for file_name, group in tqdm(df.groupby('file_name')):
         # 1. Xác định file ảnh gốc và đích
         src_path = os.path.join(RAW_IMG_ROOT, file_name)
         if not os.path.exists(src_path): continue
+
+
         
-        split = 'train' if file_name in train_files else 'val'
+        if file_name in train_files:
+            split = 'train'
+        elif file_name in val_file:
+            split = 'val'
+        else:
+            split = 'test'
+
+
         flat_name = file_name.replace('/', '_') # Boku/002.jpg -> Boku_002.jpg
         dst_img_path = os.path.join(OUTPUT_DIR, 'images', split, flat_name)
         
